@@ -1,2 +1,3 @@
 NYPL-menus/*.csv
 data_cleaning/datalog/*.csv
+data_cleaning/datalog/MenuPage.lp
