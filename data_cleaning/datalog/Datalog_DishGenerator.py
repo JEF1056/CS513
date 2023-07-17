@@ -12,7 +12,7 @@ def main():
     with open(os.path.join(filepath, "DishRules.lp"), "r") as datalog_rules:
         lines = datalog_rules.readlines()
 
-        output_file_name = "Dish.lp"
+        output_file_name = "generated/Dish.lp"
 
         with open(os.path.join(filepath, output_file_name), "w+") as datalog_full:
             datalog_full.writelines(lines)
@@ -28,7 +28,10 @@ def main():
                 lowest_price = 0.0 if math.isnan(row["lowest_price"]) else int(row["lowest_price"])
                 highest_price = 0.0 if math.isnan(row["highest_price"]) else int(row["highest_price"])
 
-                line = "dish({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6}, \"{7}\", \"{8}\").\n".format(row["id"], row["name"], row["description"], row["menus_appeared"], row["times_appeared"], row["first_appeared"], row["last_appeared"], lowest_price, highest_price)
+                name = str(row["name"]).replace('\\', "").replace('"', "") if pd.notnull(row["name"]) else ""
+                description = str(row["description"]).replace('\\', "").replace('"', "") if pd.notnull(row["description"]) else ""
+
+                line = "dish({0}, \"{1}\", \"{2}\", {3}, {4}, {5}, {6}, \"{7}\", \"{8}\").\n".format(row["id"], name, description, row["menus_appeared"], row["times_appeared"], row["first_appeared"], row["last_appeared"], lowest_price, highest_price)
 
                 datalog_full.write(line)
 

@@ -17,8 +17,5 @@ icv_firstappeared_lastappeared(ID, FA, LA) :- dish(ID, _, _, _, _, FA, LA, _, _)
 icv_lowestprice_highestprice(ID, LP, HP) :- dish(ID, _, _, _, _, _, _, LP, HP), LP > HP.
 
 % times_appeared should be greater or equal to menus_appeared
-icv_timesappeared_menusappeared(ID, MA, TA) :- dish(ID, _, _, MA, TA), MA < TA.
+icv_timesappeared_menusappeared(ID, MA, TA) :- dish(ID, _, _, MA, TA, _, _, _, _), TA < MA.
 
-% Generated from InputDishCleaned.csv
-dish(1, "Consomme, Printaniere Royal", "Consomme Printaniere Royal", 10, 8, 1897, 1927, "0", "0").
-dish(2, "Chicken Gumbo", "Chicken Gumbo", 111, 117, 1895, 1960, "0", "0").

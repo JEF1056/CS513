@@ -9,7 +9,7 @@ def main():
     with open(os.path.join(filepath, "MenuPageRules.lp"), "r") as datalog_rules:
         lines = datalog_rules.readlines()
 
-        output_file_name = "MenuPage.lp"
+        output_file_name = "generated/MenuPage.lp"
 
         with open(os.path.join(filepath, output_file_name), "w+") as datalog_full:
             datalog_full.writelines(lines)
