@@ -32,6 +32,30 @@ def generate_datalog_file_dish(inputCsvFile, rulesFile, outputDatalogFile):
             
     print("Done generating datalog file {0}.".format(outputDatalogFile))
 
+
+def generate_datalog_file_menuitem(inputCsvFile, rulesFile, outputDatalogFile):
+    with open(os.path.join(filepath, rulesFile), "r") as rules:
+        lines = rules.readlines()
+
+        with open(os.path.join(filepath, outputDatalogFile), "w+") as file:
+            file.writelines(lines)
+
+            df = pd.read_csv(os.path.join(filepath, inputCsvFile))
+
+            comment = "% Generated from {0}\n".format(inputCsvFile)
+            file.write(comment)
+
+            for _, row in df.iterrows():
+                price = 0.0 if math.isnan(row["price"]) else row["price"]
+                high_price = 0.0 if math.isnan(row["high_price"]) else row["high_price"]
+                dish_id = -1 if math.isnan(row["dish_id"]) else int(row["dish_id"])
+
+                line = "menuitem({0}, {1}, \"{2}\", \"{3}\", {4}, \"{5}\", \"{6}\", \"{7}\", \"{8}\").\n".format(row["id"], row["menu_page_id"], price, high_price, dish_id, row["created_at"], row["updated_at"], row["xpos"], row["ypos"])
+                file.write(line)
+
+    print("Done generating datalog file {0}.".format(outputDatalogFile))
+
+
 def generate_datalog_file_menupage(inputCsvFile, rulesFile, outputDatalogFile):
     with open(os.path.join(filepath, rulesFile), "r") as rules:
         lines = rules.readlines()
@@ -57,10 +81,13 @@ def generate_datalog_file_menupage(inputCsvFile, rulesFile, outputDatalogFile):
 
 def main():
     print("Generating datalog for Dish")
-    generate_datalog_file_dish("InputDishCleaned.csv", "DishRules.lp", "generated/Dish.lp")
+    # generate_datalog_file_dish("InputDishCleaned.csv", "DishRules.lp", "generated/Dish.lp")
     
+    print("Generating datalog for MenuItem")
+    generate_datalog_file_menuitem("InputMenuItemCleaned.csv", "MenuItemRules.lp", "generated/MenuItem.lp")
+
     print("Generating datalog for MenuPage")
-    generate_datalog_file_menupage("InputMenuPageCleaned.csv", "MenuPageRules.lp", "generated/MenuPage.lp")
+    # generate_datalog_file_menupage("InputMenuPageCleaned.csv", "MenuPageRules.lp", "generated/MenuPage.lp")
     
 if __name__ == "__main__":
     main()
