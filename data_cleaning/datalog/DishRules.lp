@@ -17,5 +17,5 @@ icv_firstappeared_lastappeared(ID, FA, LA) :- dish(ID, _, _, _, _, FA, LA, _, _)
 icv_lowestprice_highestprice(ID, LP, HP) :- dish(ID, _, _, _, _, _, _, LP, HP), LP > HP.
 
 % times_appeared should be greater or equal to menus_appeared
-icv_timesappeared_menusappeared(ID, MA, TA) :- dish(ID, _, _, MA, TA, _, _, _, _), TA < MA.
+% icv_timesappeared_menusappeared(ID, MA, TA) :- dish(ID, _, _, MA, TA, _, _, _, _), TA < MA.
 
