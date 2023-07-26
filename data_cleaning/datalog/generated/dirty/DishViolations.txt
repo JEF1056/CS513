@@ -1,0 +1,7 @@
+Violated integrity constraints for Dish:
+icv_firstappeared_lastappeared(164029,1900,0)
+icv_firstappeared_lastappeared(204888,1900,0)
+icv_firstappeared_lastappeared(250693,1945,0)
+icv_firstappeared_lastappeared(250699,1945,0)
+icv_firstappeared_lastappeared(301736,1940,0)
+icv_firstappeared_lastappeared(309629,1947,0)

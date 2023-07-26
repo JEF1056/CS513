@@ -1,2 +1,7 @@
 NYPL-menus/*.csv
+data_cleaning/datalog/__pycache__/
 data_cleaning/datalog/*.csv
+data_cleaning/datalog/generated/cleaned/*.lp
+data_cleaning/datalog/generated/dirty/*.lp
+data_cleaning/datalog/generated/cleaned/*Model.txt
+data_cleaning/datalog/generated/dirty/*Model.txt
