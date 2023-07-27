@@ -18,6 +18,7 @@ def validate_datalog_menupage(input_model_file, output_violations_file):
         regex1 = re.findall("icv_id_key\(\w+,\w+,\w+,\w+\)", lines)
         regex2 = re.findall("icv_id_key\(\w+,\w+,\"\w+-\w+-\w+-\w+-\w+\",\"\w+-\w+-\w+-\w+-\w+\"\)", lines)
         regex3 = re.findall("icv_id_key\(\w+,\w+,\"\d+\.\d+\",\"\d+\.\d\"\)", lines)
+        regex4 = re.findall("icv_page_number\(\w+,\w+,\w+,\w+\)", lines)
 
         with open(os.path.join(filepath, output_violations_file), "w+") as violations:
             violations.write("Violated integrity constraints for MenuPage:\n")
@@ -25,10 +26,12 @@ def validate_datalog_menupage(input_model_file, output_violations_file):
             lines1 = ["{0}\n".format(m) for m in regex1]
             lines2 = ["{0}\n".format(m) for m in regex2]
             lines3 = ["{0}\n".format(m) for m in regex3]
+            lines4 = ["{0}\n".format(m) for m in regex4]
 
             violations.writelines(lines1)
             violations.writelines(lines2)
             violations.writelines(lines3)
+            violations.writelines(lines4)
 
 
 def validate_datalog_dish(input_model_file, output_violations_file):
@@ -39,8 +42,12 @@ def validate_datalog_dish(input_model_file, output_violations_file):
         regex2 = re.findall("icv_id_key\(\w+,\w+,\"\w+-\w+-\w+-\w+-\w+\",\"\w+-\w+-\w+-\w+-\w+\"\)", lines)
         regex3 = re.findall("icv_id_key\(\w+,\w+,\"\d+\.\d+\",\"\d+\.\d\"\)", lines)
         regex4 = re.findall("icv_id_key\(\w+,\w+,\"(?:\w+\s*)*\",\"(?:\w+\s*)*\"\)", lines)
-        regex5 = re.findall("icv_firstappeared_lastappeared\(\d+,\d+,\d+\)", lines)
-        regex6 = re.findall("icv_lowestprice_highestprice\(\d+,\d+,\d+\)", lines)
+        regex5 = re.findall("icv_menus_appeared\(\d+,\d+,\d+\)", lines)
+        regex6 = re.findall("icv_times_appeared\(\d+,\d+,\d+\)", lines)
+        regex7 = re.findall("icv_first_appeared\(\d+,\d+,\d+\)", lines)
+        regex8 = re.findall("icv_firstappeared_lastappeared\(\d+,\d+,\d+\)", lines)
+        regex9 = re.findall("icv_lowestprice_highestprice\(\d+,\d+,\d+\)", lines)
+        regex10 = re.findall("icv_timesappeared_menusappeared\(\d+,\d+,\d+\)", lines)
 
         with open(os.path.join(filepath, output_violations_file), "w+") as violations:
             violations.write("Violated integrity constraints for Dish:\n")
@@ -51,6 +58,10 @@ def validate_datalog_dish(input_model_file, output_violations_file):
             lines4 = ["{0}\n".format(m) for m in regex4]
             lines5 = ["{0}\n".format(m) for m in regex5]
             lines6 = ["{0}\n".format(m) for m in regex6]
+            lines7 = ["{0}\n".format(m) for m in regex7]
+            lines8 = ["{0}\n".format(m) for m in regex8]
+            lines9 = ["{0}\n".format(m) for m in regex9]
+            lines10 = ["{0}\n".format(m) for m in regex10]
 
             violations.writelines(lines1)
             violations.writelines(lines2)
@@ -58,6 +69,10 @@ def validate_datalog_dish(input_model_file, output_violations_file):
             violations.writelines(lines4)
             violations.writelines(lines5)
             violations.writelines(lines6)
+            violations.writelines(lines7)
+            violations.writelines(lines8)
+            violations.writelines(lines9)
+            violations.writelines(lines10)
 
 
 def validate_datalog_menuitem(input_model_file, output_violations_file):
@@ -69,6 +84,8 @@ def validate_datalog_menuitem(input_model_file, output_violations_file):
         regex3 = re.findall("icv_id_key\(\w+,\w+,\"\d+\.\d+\",\"\d+\.\d\"\)", lines)
         regex4 = re.findall("icv_id_key\(\w+,\w+,\"(?:\w+\s*)*\",\"(?:\w+\s*)*\"\)", lines)
         regex5 = re.findall("icv_id_key\(\d+,\w+,\"\d+-\d+-\d+\s\d+:\d+:\d+\s\w+\",\"\d+-\d+-\d+\s\d+:\d+:\d+\s\w+\"\)", lines)
+        regex6 = re.findall("icv_createdat\(\d+,\"\d+-\d+-\d+\s\d+:\d+:\d+\sUTC\",\"\d+-\d+-\d+\s\d+:\d+:\d+\sUTC\"\)", lines)
+        regex7 = re.findall("icv_createdat_updatedat\(\d+,\"\d+-\d+-\d+\s\d+:\d+:\d+\sUTC\",\"\d+-\d+-\d+\s\d+:\d+:\d+\sUTC\"\)", lines)
 
         with open(os.path.join(filepath, output_violations_file), "w+") as violations:
             violations.write("Violated integrity constraints for MenuItem:\n")
@@ -78,33 +95,56 @@ def validate_datalog_menuitem(input_model_file, output_violations_file):
             lines3 = ["{0}\n".format(m) for m in regex3]
             lines4 = ["{0}\n".format(m) for m in regex4]
             lines5 = ["{0}\n".format(m) for m in regex5]
+            lines6 = ["{0}\n".format(m) for m in regex6]
+            lines7 = ["{0}\n".format(m) for m in regex7]
 
             violations.writelines(lines1)
             violations.writelines(lines2)
             violations.writelines(lines3)
             violations.writelines(lines4)
             violations.writelines(lines5)
+            violations.writelines(lines6)
+            violations.writelines(lines7)
 
 
-def debug():
-    print("Checking integrity constraints for Dish")
+def validate_datalog_menu(input_model_file, output_violations_file):
+    with open(os.path.join(filepath, input_model_file), "r") as model:
+        lines = model.read()
 
-    generate_model("generated/cleaned/Dish.lp", "generated/cleaned/DishModel.txt")
-    validate_datalog_dish("generated/cleaned/DishModel.txt", "generated/cleaned/DishViolations.txt")
+        regex1 = re.findall("icv_id_key\(\w+,\w+,\w+,\w+\)", lines)
+        regex2 = re.findall("icv_id_key\(\w+,\w+,\"\w+-\w+-\w+-\w+-\w+\",\"\w+-\w+-\w+-\w+-\w+\"\)", lines)
+        regex3 = re.findall("icv_id_key\(\w+,\w+,\"\d+\.\d+\",\"\d+\.\d\"\)", lines)
+        regex4 = re.findall("icv_id_key\(\w+,\w+,\"(?:\w+\s*)*\",\"(?:\w+\s*)*\"\)", lines)
+        regex5 = re.findall("icv_id_key\(\d+,\w+,\"\d+-\d+-\d+\s\d+:\d+:\d+\s\w+\",\"\d+-\d+-\d+\s\d+:\d+:\d+\s\w+\"\)", lines)
+        regex6 = re.findall("icv_pagecount\(\d+,\d+,\d+\)", lines)
+        regex7 = re.findall("icv_dishcount\(\d+,\d+,\d+\)", lines)
 
-    generate_model("generated/dirty/Dish.lp", "generated/dirty/DishModel.txt")
-    validate_datalog_dish("generated/dirty/DishModel.txt", "generated/dirty/DishViolations.txt")
+        with open(os.path.join(filepath, output_violations_file), "w+") as violations:
+            violations.write("Violated integrity constraints for MenuItem:\n")
 
-    print("Checking integrity constraints for MenuItem")
-    generate_model("generated/cleaned/MenuItem.lp", "generated/cleaned/MenuItemModel.txt")
-    validate_datalog_menuitem("generated/cleaned/MenuItemModel.txt", "generated/cleaned/MenuItemViolations.txt")
+            lines1 = ["{0}\n".format(m) for m in regex1]
+            lines2 = ["{0}\n".format(m) for m in regex2]
+            lines3 = ["{0}\n".format(m) for m in regex3]
+            lines4 = ["{0}\n".format(m) for m in regex4]
+            lines5 = ["{0}\n".format(m) for m in regex5]
+            lines6 = ["{0}\n".format(m) for m in regex6]
+            lines7 = ["{0}\n".format(m) for m in regex7]
 
-    generate_model("generated/dirty/MenuItem.lp", "generated/dirty/MenuItemModel.txt")
-    validate_datalog_menuitem("generated/dirty/MenuItemModel.txt", "generated/dirty/MenuItemViolations.txt")
+            violations.writelines(lines1)
+            violations.writelines(lines2)
+            violations.writelines(lines3)
+            violations.writelines(lines4)
+            violations.writelines(lines5)
+            violations.writelines(lines6)
+            violations.writelines(lines7)
 
-    print("Checking integrity constaints for MenuPage")
-    generate_model("generated/cleaned/MenuPage.lp", "generated/cleaned/MenuPageModel.txt")
-    validate_datalog_menupage("generated/cleaned/MenuPageModel.txt", "generated/cleaned/MenuPageViolations.txt")
 
-    generate_model("generated/dirty/MenuPage.lp", "generated/dirty/MenuPageModel.txt")
-    validate_datalog_menupage("generated/dirty/MenuPageModel.txt", "generated/dirty/MenuPageViolations.txt")
+def main():
+    generate_model("generated/dirty/Menu.lp", "generated/dirty/MenuModel.txt")
+    validate_datalog_menu("generated/dirty/MenuModel.txt", "generated/dirty/MenuViolations.txt")
+
+    generate_model("generated/cleaned/Menu.lp", "generated/cleaned/MenuModel.txt")
+    validate_datalog_menu("generated/cleaned/MenuModel.txt", "generated/cleaned/MenuViolations.txt")
+
+if __name__ == "__main__":
+    main()

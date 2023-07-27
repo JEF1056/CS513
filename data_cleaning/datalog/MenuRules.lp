@@ -1,5 +1,5 @@
-id,name,sponsor,event,venue,place,physical_description,occasion,notes,call_number,keywords,
-language,date,location,location_type,currency,currency_symbol,status,page_count,dish_count
+% id,name,sponsor,event,venue,place,physical_description,occasion,notes,call_number,keywords,
+% language,date,location,location_type,currency,currency_symbol,status,page_count,dish_count
 
 % id is the primary key
 icv_id_key(ID, name, N1, N2)                 :- menu(ID, N1, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _),
@@ -59,3 +59,9 @@ icv_id_key(ID, page_count, P1, P2)           :- menu(ID, _, _, _, _, _, _, _, _,
 icv_id_key(ID, dish_count, D1, D2)           :- menu(ID, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, D1),
                                                 menu(ID, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, D2),
                                                 D1 < D2.
+
+% page_count should be greater than 1
+icv_pagecount(ID, PC) :- menu(ID, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, PC, _), PC < 1.
+
+% dish_count should be greater than 1
+icv_dishcount(ID, DC) :- menu(ID, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, DC), DC < 1.
