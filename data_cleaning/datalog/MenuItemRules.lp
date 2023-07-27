@@ -10,3 +10,8 @@ icv_id_key(ID, updated_at, U1, U2) :- menuitem(ID, _, _, _, _, _, U1, _, _), men
 icv_id_key(ID, xpos, X1, X2)       :- menuitem(ID, _, _, _, _, _, _, X1, _), menuitem(ID, _, _, _, _, _, _, X2, _), X1 < X2.
 icv_id_key(ID, xpos, Y1, Y2)       :- menuitem(ID, _, _, _, _, _, _, _, Y1), menuitem(ID, _, _, _, _, _, _, _, Y2), Y1 < Y2.
 
+% created_at should be greater than 2011
+icv_created_at(ID, CA) :- menuitem(ID, _, _, _, _, CA, _, _, _), CA < "2011".
+
+% created_at should be less than updated_at
+icv_createdat_updatedat(ID, CA, UA) :- menuitem(ID, _, _, _, _, CA, UA, _, _), UA < CA.

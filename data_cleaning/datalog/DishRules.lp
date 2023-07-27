@@ -10,12 +10,20 @@ icv_id_key(ID, last_appeared, L1, L2)  :- dish(ID, _, _, _, _, _, L1, _, _), dis
 icv_id_key(ID, lowest_price, X1, X2)   :- dish(ID, _, _, _, _, _, _, X1, _), dish(ID, _, _, _, _, _, _, X2, _), X1 < X2.
 icv_id_key(ID, highest_price, Y1, Y2)  :- dish(ID, _, _, _, _, _, _, _, Y1), dish(ID, _, _, _, _, _, _, _, Y2), Y1 < Y2.
 
+% menus_appeared should be greater than 1
+icv_menus_appeared(ID, MA) :- dish(ID, _, _, MA, _, _, _, _, _), MA < 1.
+
+% times_appeared should be greater than 1
+icv_times_appeared(ID, TA) :- dish(ID, _, _, _, TA, _, _, _, _), TA < 1.
+
+% first_appeared should be greater than 1850
+icv_first_appeared(ID, FA) :- dish(ID, _, _, _, _, FA, _, _, _), FA < 1850.
+
 % first_appeared should be before last_appeared
 icv_firstappeared_lastappeared(ID, FA, LA) :- dish(ID, _, _, _, _, FA, LA, _, _), LA < FA.
 
 % lowest_price should be less than highest_price
-icv_lowestprice_highestprice(ID, LP, HP) :- dish(ID, _, _, _, _, _, _, LP, HP), LP > HP.
+icv_lowestprice_highestprice(ID, LP, HP) :- dish(ID, _, _, _, _, _, _, LP, HP), HP < LP.
 
 % times_appeared should be greater or equal to menus_appeared
-% icv_timesappeared_menusappeared(ID, MA, TA) :- dish(ID, _, _, MA, TA, _, _, _, _), TA < MA.
-
+icv_timesappeared_menusappeared(ID, TA, MA) :- dish(ID, _, _, MA, TA, _, _, _, _), TA < MA.

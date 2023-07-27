@@ -7,3 +7,5 @@ icv_id_key(ID, full_height, H1, H2) :- menupage(ID, _, _, _, H1, _, _), menupage
 icv_id_key(ID, full_width, W1, W2)  :- menupage(ID, _, _, _, _, W1, _), menupage(ID, _, _, _, _, W2, _), W1 < W2.
 icv_id_key(ID, uuid, U1, U2)        :- menupage(ID, _, _, _, _, _, U1), menupage(ID, _, _, _, _, _, U2), U1 < U2.
 
+% page_number should be greater than 0
+icv_page_number(ID, PN) :- menupage(ID, PN, _, _, _, _, _), PN < 1.
