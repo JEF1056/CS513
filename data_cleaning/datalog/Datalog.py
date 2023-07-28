@@ -14,14 +14,17 @@ from DatalogValidator import *
 # @IN rules_menuitem @URI file:MenuItemRules.lp
 # @IN rules_menupage @URI file:MenuPageRules.lp
 # @IN rules_menu @URI file:MenuRules.lp
+# @IN rules_combined @URI file:CombinedRules.lp
 # @OUT facts_dish_cleaned @URI file:cleaned/Dish.lp
 # @OUT facts_menuitem_cleaned @URI file:cleaned/MenuItem.lp
 # @OUT facts_menupage_cleaned @URI file:cleaned/MenuPage.lp
 # @OUT facts_menu_cleaned @URI file:cleaned/Menu.lp
+# @OUT facts_combined_cleaned @URI file:cleaned/Combined.lp
 # @OUT facts_dish_dirty @URI file:dirty/Dish.lp
 # @OUT facts_menuitem_dirty @URI file:dirty/MenuItem.lp
 # @OUT facts_menupage_dirty @URI file:dirty/MenuPage.lp
 # @OUT facts_menu_dirty @URI file:dirty/Menu.lp
+# @OUT facts_combined_dirty @URI file:dirty/Combined.lp
 # @OUT model_dish_cleaned @URI file:cleaned/DishModel.txt
 # @OUT model_dish_dirty @URI file:dirty/DishModel.txt
 # @OUT model_menuitem_cleaned @URI file:/cleaned/MenuItemModel.txt
@@ -30,6 +33,8 @@ from DatalogValidator import *
 # @OUT model_menupage_dirty @URI file:/dirty/MenuPageModel.txt
 # @OUT model_menu_cleaned @URI file:/cleaned/MenuModel.txt
 # @OUT model_menu_dirty @URI file:/dirty/MenuModel.txt
+# @OUT model_combined_cleaned @URI file:cleaned/CombinedModel.txt
+# @OUT model_combined_dirty @URI file:dirty/CombinedModel.txt
 # @OUT violations_dish_cleaned @URI file:cleaned/DishViolations.txt
 # @OUT violations_dish_dirty @URI file:dirty/DishViolations.txt
 # @OUT violations_menuitem_cleaned @URI file:/cleaned/MenuItemViolations.txt
@@ -38,6 +43,8 @@ from DatalogValidator import *
 # @OUT violations_menupage_dirty @URI file:/dirty/MenuPageViolations.txt
 # @OUT violations_menu_cleaned @URI file:/cleaned/MenuViolations.txt
 # @OUT violations_menu_dirty @URI file:/dirty/MenuViolations.txt
+# @OUT violations_combined_cleaned @URI file:/cleaned/CombinedViolations.txt
+# @OUT violations_combined_dirty @URI file:/dirty/CombinedViolations.txt
 def main():
 
     # @BEGIN generate_datalog_file_dish_cleaned
@@ -102,7 +109,34 @@ def main():
     generate_datalog_file_menu("InputMenuDirty.csv", "MenuRules.lp", "generated/dirty/Menu.lp")
     # @END generate_datalog_file_menu_dirty
 
+
+    # @BEGIN generate_datalog_file_combined_cleaned
+    # @IN csv_1 @AS csv_dish_cleaned @URI file:InputDishCleaned.csv
+    # @IN csv_2 @AS csv_menu_cleaned @URI file:InputMenuCleaned.csv
+    # @IN csv_3 @AS csv_menuitem_cleaned @URI file:InputMenuItemCleaned.csv
+    # @IN csv_4 @AS csv_menupage_cleaned @URI file:InputMenuPageCleaned.csv
+    # @IN rules @AS rules_combined @URI file:CombinedRules.lp
+    # @OUT output @AS facts_combined_cleaned @URI file:cleaned/Combined.lp
+    generate_datalog_file_combined("InputDishCleaned.csv", "InputMenuCleaned.csv",
+                                   "InputMenuItemCleaned.csv", "InputMenuPageCleaned.csv",
+                                   "CombinedRules.lp", "generated/cleaned/Combined.lp")
+    # @END generate_datalog_file_combined_cleaned
+
+    # @BEGIN generate_datalog_file_combined_dirty
+    # @IN csv_1 @AS csv_dish_dirty @URI file:InputDishDirty.csv
+    # @IN csv_2 @AS csv_menu_dirty @URI file:InputMenuDirty.csv
+    # @IN csv_3 @AS csv_menuitem_dirty @URI file:InputMenuItemDirty.csv
+    # @IN csv_4 @AS csv_menupage_dirty @URI file:InputMenuPageDirty.csv
+    # @IN rules @AS rules_combined @URI file:CombinedRules.lp
+    # @OUT output @AS facts_combined_dirty @URI file:dirty/Combined.lp
+    generate_datalog_file_combined("InputDishDirty.csv", "InputMenuDirty.csv",
+                                   "InputMenuItemDirty.csv", "InputMenuPageDirty.csv",
+                                   "CombinedRules.lp", "generated/dirty/Combined.lp")
+    # @END generate_datalog_file_combined_dirty
+    
+
     print("Checking integrity constraints for Dish")
+
 
     # @BEGIN build_clingo_model_dish_cleaned
     # @IN facts @AS facts_dish_cleaned @URI file:cleaned/Dish.lp
@@ -214,6 +248,35 @@ def main():
     # @OUT violations @AS violations_menu_dirty @URI file:dirty/MenuViolations.txt
     validate_datalog_menu("generated/dirty/MenuModel.txt", "generated/dirty/MenuViolations.txt")
     # @END validate_datalog_ic_menu_dirty
+
+
+    print("Checking integrity constaints for Combined") 
+
+
+    # @BEGIN build_clingo_model_combined_cleaned
+    # @IN facts @AS facts_combined_cleaned @URI file:cleaned/Combined.lp
+    # @OUT model @AS model_combined_cleaned @URI file:cleaned/CombinedModel.txt
+    generate_model("generated/cleaned/Combined.lp", "generated/cleaned/CombinedModel.txt")
+    # @END build_clingo_model_combined_cleaned
+
+    # @BEGIN validate_datalog_ic_combined_cleaned
+    # @IN model @AS model_combined_cleaned @URI file:cleaned/CombinedModel.txt
+    # @OUT violations @AS violations_combined_cleaned @URI file:cleaned/CombinedViolations.txt
+    validate_datalog_menu("generated/cleaned/CombinedModel.txt", "generated/cleaned/CombinedViolations.txt")
+    # @END validate_datalog_ic_combined_cleaned
+
+    # @BEGIN build_clingo_model_combined_dirty
+    # @IN facts @AS facts_combined_dirty @URI file:dirty/Combined.lp
+    # @OUT model @AS model_combined_dirty @URI file:dirty/CombinedModel.txt
+    generate_model("generated/dirty/Combined.lp", "generated/dirty/CombinedModel.txt")
+    # @END build_clingo_model_combined_dirty
+
+    # @BEGIN validate_datalog_ic_combined_dirty
+    # @IN model @AS model_combined_dirty @URI file:dirty/CombinedModel.txt
+    # @OUT violations @AS violations_combined_dirty @URI file:dirty/CombinedViolations.txt
+    validate_datalog_menu("generated/dirty/CombinedModel.txt", "generated/dirty/CombinedViolations.txt")
+    # @END validate_datalog_ic_combined_dirty
+
 
 if __name__ == "__main__":
     main()

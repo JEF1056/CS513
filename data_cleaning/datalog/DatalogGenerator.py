@@ -6,7 +6,6 @@ import pathlib
 filepath = pathlib.Path(__file__).parent.absolute()
 
 def generate_datalog_file_dish(input_csv_file, rules_file, output_datalog_file):
-
     with open(os.path.join(filepath, rules_file), "r") as rules:
         lines = rules.readlines()
 
@@ -170,9 +169,62 @@ def generate_datalog_file_menu(input_csv_file, rules_file, output_datalog_file):
     print("Done generating datalog file {0}.".format(output_datalog_file))
 
 
+def generate_datalog_file_combined(input_csv_file_dish, input_csv_file_menu, input_csv_file_menuitem, input_csv_file_menupage, rules_file, output_datalog_file):
+    with open(os.path.join(filepath, rules_file), "r") as rules:
+        lines = rules.readlines()
+
+        with open(os.path.join(filepath, output_datalog_file), "w+") as file:
+            file.writelines(lines)
+
+            df = pd.read_csv(os.path.join(filepath, input_csv_file_dish))
+            comment = "% Generated from {0}\n".format(input_csv_file_dish)
+            file.write(comment)
+
+            for _, row in df.iterrows():
+
+                line = "dish({0}).\n".format(row["id"])
+                file.write(line)
+
+            df = pd.read_csv(os.path.join(filepath, input_csv_file_menu))
+            comment = "% Generated from {0}\n".format(input_csv_file_menu)
+            file.write(comment)
+
+            for _, row in df.iterrows():
+
+                line = "menu({0}).\n".format(row["id"])
+                file.write(line)
+                
+
+            df = pd.read_csv(os.path.join(filepath, input_csv_file_menuitem))
+            comment = "% Generated from {0}\n".format(input_csv_file_menuitem)
+            file.write(comment)
+
+            for _, row in df.iterrows():
+                dish_id = -1 if math.isnan(row["dish_id"]) else int(row["dish_id"])
+
+                line = "menuitem({0}, {1}, {2}).\n".format(row["id"], row["menu_page_id"], dish_id)
+                file.write(line)
+
+            df = pd.read_csv(os.path.join(filepath, input_csv_file_menupage))
+            comment = "% Generated from {0}\n".format(input_csv_file_menupage)
+            file.write(comment)
+
+            for _, row in df.iterrows():
+                line = "menupage({0}, {1}).\n".format(row["id"], row["menu_id"])
+                file.write(line)
+            
+    print("Done generating datalog file {0}.".format(output_datalog_file))
+
+
 def main():
-    generate_datalog_file_menu("InputMenuDirty.csv", "MenuRules.lp", "generated/dirty/Menu.lp")
-    generate_datalog_file_menu("InputMenuCleaned.csv", "MenuRules.lp", "generated/cleaned/Menu.lp")
+    generate_datalog_file_combined("InputDishDirty.csv", "InputMenuDirty.csv",
+                                   "InputMenuItemDirty.csv", "InputMenuPageDirty.csv",
+                                   "CombinedRules.lp", "generated/dirty/Combined.lp")
+    
+    generate_datalog_file_combined("InputDishCleaned.csv", "InputMenuCleaned.csv",
+                                   "InputMenuItemCleaned.csv", "InputMenuPageCleaned.csv",
+                                   "CombinedRules.lp", "generated/cleaned/Combined.lp")
+
 
 if __name__ == "__main__":
     main()

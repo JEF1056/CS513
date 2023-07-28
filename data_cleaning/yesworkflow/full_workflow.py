@@ -9,6 +9,7 @@
 # @IN rules_menuitem @URI file:data_cleaning/datalog/MenuItemRules.lp
 # @IN rules_menupage @URI file:data_cleaning/datalog/MenuPageRules.lp
 # @IN rules_menu @URI file:data_cleaning/datalog/MenuRules.lp
+# @IN rules_combined @URI file:data_cleaning/datalog/CombinedRules.lp
 
 # @OUT csv_dish_openrefine @URI file:data_cleaning/openrefine/OpenRefine_Dish_cleaned.csv
 # @OUT csv_menupage_openrefine @URI file:data_cleaning/openrefine/OpenRefine_MenuPage_cleaned.csv
@@ -28,11 +29,13 @@
 # @OUT facts_menuitem_cleaned @URI file:data_cleaning/datalog/generated/cleaned/MenuItem.lp
 # @OUT facts_menupage_cleaned @URI file:data_cleaning/datalog/generated/cleaned/MenuPage.lp
 # @OUT facts_menu_cleaned @URI file:data_cleaning/datalog/generated/cleaned/Menu.lp
+# @OUT facts_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/Combined.lp
 
 # @OUT facts_dish_dirty @URI file:data_cleaning/datalog/generated/dirty/Dish.lp
 # @OUT facts_menuitem_dirty @URI file:data_cleaning/datalog/generated/dirty/MenuItem.lp
 # @OUT facts_menupage_dirty @URI file:data_cleaning/datalog/generated/dirty/MenuPage.lp
 # @OUT facts_menu_dirty @URI file:data_cleaning/datalog/generated/dirty/Menu.lp
+# @OUT facts_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/Combined.lp
 
 # @OUT model_dish_cleaned @URI file:data_cleaning/datalog/generated/cleaned/DishModel.txt
 # @OUT model_dish_dirty @URI file:data_cleaning/datalog/generated/dirty/DishModel.txt
@@ -42,6 +45,8 @@
 # @OUT model_menupage_dirty @URI file:data_cleaning/datalog/generated/dirty/MenuPageModel.txt
 # @OUT model_menu_cleaned @URI file:data_cleaning/datalog/generated/cleaned/MenuModel.txt
 # @OUT model_menu_dirty @URI file:data_cleaning/datalog/generated/dirty/MenuModel.txt
+# @OUT model_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/CombinedModel.txt
+# @OUT model_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/CombinedModel.txt
 
 # @OUT violations_dish_cleaned @URI file:data_cleaning/datalog/generated/cleaned/DishViolations.txt
 # @OUT violations_dish_dirty @URI file:data_cleaning/datalog/generated/dirty/DishViolations.txt
@@ -51,6 +56,8 @@
 # @OUT violations_menupage_dirty @URI file:data_cleaning/datalog/generated/dirty/MenuPageViolations.txt
 # @OUT violations_menu_cleaned @URI file:data_cleaning/datalog/generated/cleaned/MenuViolations.txt
 # @OUT violations_menu_dirty @URI file:data_cleaning/datalog/generated/dirty/MenuViolations.txt
+# @OUT violations_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/CombinedViolations.txt
+# @OUT violations_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/CombinedViolations.txt
 
 def main():
 
@@ -213,6 +220,38 @@ def main():
     # @OUT violations_dirty @AS violations_menu_dirty @URI file:data_cleaning/datalog/generated/dirty/MenuViolations.txt
     x = x + 1
     # @END datalog_violations_menu
+
+    # @BEGIN datalog_facts_combined
+    # @IN csv_1_cleaned @AS csv_dish_openrefine @URI file:data_cleaning/openrefine/OpenRefine_Dish_cleaned.csv
+    # @IN csv_1_dirty @AS csv_dish_dirty @URI file:NYPL-menus/Dish.csv
+    # @IN csv_2_cleaned @AS csv_menu_openrefine @URI file:data_cleaning/openrefine/OpenRefine_Menu_cleaned.csv
+    # @IN csv_2_dirty @AS csv_menu_dirty @URI file:NYPL-menus/Menu.csv
+    # @IN csv_3_cleaned @AS csv_menupage_openrefine @URI file:data_cleaning/openrefine/OpenRefine_MenuPage_cleaned.csv
+    # @IN csv_3_dirty @AS csv_menupage_dirty @URI file:NYPL-menus/MenuPage.csv
+    # @IN csv_4_cleaned @AS csv_menuitem_python @URI file:Python_MenuItem_cleaned.csv
+    # @IN csv_4_dirty @AS csv_menuitem_dirty @URI file:NYPL-menus/MenuItem.csv
+    # @IN rules @AS rules_combined @URI file:data_cleaning/datalog/CombinedRules.lp
+    # @OUT facts_cleaned @AS facts_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/Combined.lp
+    # @OUT facts_dirty @AS facts_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/Combined.lp
+    x = x + 1
+    # @END datalog_facts_combined
+
+    # @BEGIN datalog_model_combined
+    # @IN facts_cleaned @AS facts_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/Combined.lp
+    # @IN facts_dirty @AS facts_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/Combined.lp
+    # @OUT model_cleaned @AS model_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/CombinedModel.txt
+    # @OUT model_dirty @AS model_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/CombinedModel.txt
+    x = x + 1
+    # @END datalog_model_combined
+
+    # @BEGIN datalog_violations_combined
+    # @IN model_cleaned @AS model_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/CombinedModel.txt
+    # @IN model_dirty @AS model_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/CombinedModel.txt
+    # @OUT violations_cleaned @AS violations_combined_cleaned @URI file:data_cleaning/datalog/generated/cleaned/CombinedViolations.txt
+    # @OUT violations_dirty @AS violations_combined_dirty @URI file:data_cleaning/datalog/generated/dirty/CombinedViolations.txt
+    x = x + 1
+    # @END datalog_violations_combined
+
 
 
     x = x + 1

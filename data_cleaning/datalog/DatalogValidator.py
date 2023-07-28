@@ -120,7 +120,7 @@ def validate_datalog_menu(input_model_file, output_violations_file):
         regex7 = re.findall("icv_dishcount\(\d+,\d+,\d+\)", lines)
 
         with open(os.path.join(filepath, output_violations_file), "w+") as violations:
-            violations.write("Violated integrity constraints for MenuItem:\n")
+            violations.write("Violated integrity constraints for Menu:\n")
 
             lines1 = ["{0}\n".format(m) for m in regex1]
             lines2 = ["{0}\n".format(m) for m in regex2]
@@ -139,12 +139,35 @@ def validate_datalog_menu(input_model_file, output_violations_file):
             violations.writelines(lines7)
 
 
-def main():
-    generate_model("generated/dirty/Menu.lp", "generated/dirty/MenuModel.txt")
-    validate_datalog_menu("generated/dirty/MenuModel.txt", "generated/dirty/MenuViolations.txt")
+def validate_datalog_combined(input_model_file, output_violations_file):
+    with open(os.path.join(filepath, input_model_file), "r") as model:
+        lines = model.read()
 
-    generate_model("generated/cleaned/Menu.lp", "generated/cleaned/MenuModel.txt")
-    validate_datalog_menu("generated/cleaned/MenuModel.txt", "generated/cleaned/MenuViolations.txt")
+        regex1 = re.findall("icv_menuid_is_fk_in_menu\(-{0,1}\d+\)", lines)
+        regex2 = re.findall("icv_menupageid_is_fk_in_menupage\(-{0,1}\d+\)", lines)
+        regex3 = re.findall("icv_dishid_is_fk_in_menuitem\(-{0,1}\d+\)", lines)
+        regex4 = re.findall("icv_dishid_in_menuitem\(-{0,1}\d+\)", lines)
+
+        with open(os.path.join(filepath, output_violations_file), "w+") as violations:
+            violations.write("Violated integrity constraints for Combined:\n")
+
+            lines1 = ["{0}\n".format(m) for m in regex1]
+            lines2 = ["{0}\n".format(m) for m in regex2]
+            lines3 = ["{0}\n".format(m) for m in regex3]
+            lines4 = ["{0}\n".format(m) for m in regex4]
+
+            violations.writelines(lines1)
+            violations.writelines(lines2)
+            violations.writelines(lines3)
+            violations.writelines(lines4)
+
+
+def main():
+    generate_model("generated/dirty/Combined.lp", "generated/dirty/CombinedModel.txt")
+    validate_datalog_menu("generated/dirty/CombinedModel.txt", "generated/dirty/CombinedViolations.txt")
+
+    generate_model("generated/cleaned/Combined.lp", "generated/cleaned/CombinedModel.txt")
+    validate_datalog_menu("generated/cleaned/CombinedModel.txt", "generated/cleaned/CombinedViolations.txt")
 
 if __name__ == "__main__":
     main()
