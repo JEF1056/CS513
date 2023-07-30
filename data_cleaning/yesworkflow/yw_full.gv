@@ -1,0 +1,189 @@
+
+/* Start of top-level graph */
+digraph Workflow {
+rankdir=LR
+
+/* Title for graph */
+fontname=Courier; fontsize=18; labelloc=t
+label=main
+
+/* Start of double cluster for drawing box around nodes in workflow */
+subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
+subgraph cluster_workflow_box_inner { label=""; color=white
+
+/* Style for nodes representing atomic programs in workflow */
+node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Courier]
+
+/* Nodes representing atomic programs in workflow */
+openrefine_dish
+openrefine_menupage
+openrefine_menu
+or2yw_dish
+or2yw_menupage
+or2yw_menu
+python_menuitem
+datalog_facts_dish
+datalog_model_dish
+datalog_violations_dish
+datalog_facts_menuitem
+datalog_model_menuitem
+datalog_violations_menuitem
+datalog_facts_menupage
+datalog_model_menupage
+datalog_violations_menupage
+datalog_facts_menu
+datalog_model_menu
+datalog_violations_menu
+datalog_facts_combined
+datalog_model_combined
+datalog_violations_combined
+
+/* Style for nodes representing parameter and non-parameter data channels in workflow */
+node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
+
+/* Nodes representing parameter and non-parameter data channels in workflow */
+csv_dish_openrefine [shape=record rankdir=LR label="{{<f0> csv_dish_openrefine |<f1> file\:data_cleaning/openrefine/OpenRefine_Dish_cleaned.csv}}"];
+csv_menupage_openrefine [shape=record rankdir=LR label="{{<f0> csv_menupage_openrefine |<f1> file\:data_cleaning/openrefine/OpenRefine_MenuPage_cleaned.csv}}"];
+csv_menu_openrefine [shape=record rankdir=LR label="{{<f0> csv_menu_openrefine |<f1> file\:data_cleaning/openrefine/OpenRefine_Menu_cleaned.csv}}"];
+history_dish_openrefine [shape=record rankdir=LR label="{{<f0> history_dish_openrefine |<f1> file\:data_cleaning/openrefine/OpenRefine_Dish_history.json}}"];
+history_menupage_openrefine [shape=record rankdir=LR label="{{<f0> history_menupage_openrefine |<f1> file\:data_cleaning/openrefine/OpenRefine_MenuPage_history.json}}"];
+history_menu_openrefine [shape=record rankdir=LR label="{{<f0> history_menu_openrefine |<f1> file\:data_cleaning/openrefine/OpenRefine_Menu_history.json}}"];
+csv_menuitem_python [shape=record rankdir=LR label="{{<f0> csv_menuitem_python |<f1> file\:Python_MenuItem_cleaned.csv}}"];
+oryw_dish [shape=record rankdir=LR label="{{<f0> oryw_dish |<f1> file\:data_cleaning/yesworkflow/yw_openrefine_Dish.png}}"];
+oryw_menupage [shape=record rankdir=LR label="{{<f0> oryw_menupage |<f1> file\:data_cleaning/yesworkflow/yw_openrefine_MenuPage.png}}"];
+oryw_menu [shape=record rankdir=LR label="{{<f0> oryw_menu |<f1> file\:data_cleaning/yesworkflow/yw_openrefine_Menu.png}}"];
+facts_dish_cleaned [shape=record rankdir=LR label="{{<f0> facts_dish_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/Dish.lp}}"];
+facts_menuitem_cleaned [shape=record rankdir=LR label="{{<f0> facts_menuitem_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuItem.lp}}"];
+facts_menupage_cleaned [shape=record rankdir=LR label="{{<f0> facts_menupage_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuPage.lp}}"];
+facts_menu_cleaned [shape=record rankdir=LR label="{{<f0> facts_menu_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/Menu.lp}}"];
+facts_combined_cleaned [shape=record rankdir=LR label="{{<f0> facts_combined_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/Combined.lp}}"];
+facts_dish_dirty [shape=record rankdir=LR label="{{<f0> facts_dish_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/Dish.lp}}"];
+facts_menuitem_dirty [shape=record rankdir=LR label="{{<f0> facts_menuitem_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuItem.lp}}"];
+facts_menupage_dirty [shape=record rankdir=LR label="{{<f0> facts_menupage_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuPage.lp}}"];
+facts_menu_dirty [shape=record rankdir=LR label="{{<f0> facts_menu_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/Menu.lp}}"];
+facts_combined_dirty [shape=record rankdir=LR label="{{<f0> facts_combined_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/Combined.lp}}"];
+model_dish_cleaned [shape=record rankdir=LR label="{{<f0> model_dish_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/DishModel.txt}}"];
+model_dish_dirty [shape=record rankdir=LR label="{{<f0> model_dish_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/DishModel.txt}}"];
+model_menuitem_cleaned [shape=record rankdir=LR label="{{<f0> model_menuitem_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuItemModel.txt}}"];
+model_menuitem_dirty [shape=record rankdir=LR label="{{<f0> model_menuitem_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuItemModel.txt}}"];
+model_menupage_cleaned [shape=record rankdir=LR label="{{<f0> model_menupage_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuPageModel.txt}}"];
+model_menupage_dirty [shape=record rankdir=LR label="{{<f0> model_menupage_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuPageModel.txt}}"];
+model_menu_cleaned [shape=record rankdir=LR label="{{<f0> model_menu_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuModel.txt}}"];
+model_menu_dirty [shape=record rankdir=LR label="{{<f0> model_menu_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuModel.txt}}"];
+model_combined_cleaned [shape=record rankdir=LR label="{{<f0> model_combined_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/CombinedModel.txt}}"];
+model_combined_dirty [shape=record rankdir=LR label="{{<f0> model_combined_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/CombinedModel.txt}}"];
+violations_dish_cleaned [shape=record rankdir=LR label="{{<f0> violations_dish_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/DishViolations.txt}}"];
+violations_dish_dirty [shape=record rankdir=LR label="{{<f0> violations_dish_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/DishViolations.txt}}"];
+violations_menuitem_cleaned [shape=record rankdir=LR label="{{<f0> violations_menuitem_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuItemViolations.txt}}"];
+violations_menuitem_dirty [shape=record rankdir=LR label="{{<f0> violations_menuitem_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuItemViolations.txt}}"];
+violations_menupage_cleaned [shape=record rankdir=LR label="{{<f0> violations_menupage_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuPageViolations.txt}}"];
+violations_menupage_dirty [shape=record rankdir=LR label="{{<f0> violations_menupage_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuPageViolations.txt}}"];
+violations_menu_cleaned [shape=record rankdir=LR label="{{<f0> violations_menu_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/MenuViolations.txt}}"];
+violations_menu_dirty [shape=record rankdir=LR label="{{<f0> violations_menu_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/MenuViolations.txt}}"];
+violations_combined_cleaned [shape=record rankdir=LR label="{{<f0> violations_combined_cleaned |<f1> file\:data_cleaning/datalog/generated/cleaned/CombinedViolations.txt}}"];
+violations_combined_dirty [shape=record rankdir=LR label="{{<f0> violations_combined_dirty |<f1> file\:data_cleaning/datalog/generated/dirty/CombinedViolations.txt}}"];
+csv_dish_dirty [shape=record rankdir=LR label="{{<f0> csv_dish_dirty |<f1> file\:NYPL-menus/Dish.csv}}"];
+csv_menupage_dirty [shape=record rankdir=LR label="{{<f0> csv_menupage_dirty |<f1> file\:NYPL-menus/MenuPage.csv}}"];
+csv_menu_dirty [shape=record rankdir=LR label="{{<f0> csv_menu_dirty |<f1> file\:NYPL-menus/Menu.csv}}"];
+csv_menuitem_dirty [shape=record rankdir=LR label="{{<f0> csv_menuitem_dirty |<f1> file\:NYPL-menus/MenuItem.csv}}"];
+rules_dish [shape=record rankdir=LR label="{{<f0> rules_dish |<f1> file\:data_cleaning/datalog/DishRules.lp}}"];
+rules_menuitem [shape=record rankdir=LR label="{{<f0> rules_menuitem |<f1> file\:data_cleaning/datalog/MenuItemRules.lp}}"];
+rules_menupage [shape=record rankdir=LR label="{{<f0> rules_menupage |<f1> file\:data_cleaning/datalog/MenuPageRules.lp}}"];
+rules_menu [shape=record rankdir=LR label="{{<f0> rules_menu |<f1> file\:data_cleaning/datalog/MenuRules.lp}}"];
+rules_combined [shape=record rankdir=LR label="{{<f0> rules_combined |<f1> file\:data_cleaning/datalog/CombinedRules.lp}}"];
+
+/* Edges representing connections between programs and channels */
+openrefine_dish -> csv_dish_openrefine
+openrefine_dish -> history_dish_openrefine
+csv_dish_dirty -> openrefine_dish
+openrefine_menupage -> csv_menupage_openrefine
+openrefine_menupage -> history_menupage_openrefine
+csv_menupage_dirty -> openrefine_menupage
+openrefine_menu -> csv_menu_openrefine
+openrefine_menu -> history_menu_openrefine
+csv_menu_dirty -> openrefine_menu
+or2yw_dish -> oryw_dish
+history_dish_openrefine -> or2yw_dish
+or2yw_menupage -> oryw_menupage
+history_menupage_openrefine -> or2yw_menupage
+or2yw_menu -> oryw_menu
+history_menu_openrefine -> or2yw_menu
+python_menuitem -> csv_menuitem_python
+csv_menuitem_dirty -> python_menuitem
+datalog_facts_dish -> facts_dish_cleaned
+datalog_facts_dish -> facts_dish_dirty
+csv_dish_openrefine -> datalog_facts_dish
+csv_dish_dirty -> datalog_facts_dish
+rules_dish -> datalog_facts_dish
+datalog_model_dish -> model_dish_cleaned
+datalog_model_dish -> model_dish_dirty
+facts_dish_cleaned -> datalog_model_dish
+facts_dish_dirty -> datalog_model_dish
+datalog_violations_dish -> violations_dish_cleaned
+datalog_violations_dish -> violations_dish_dirty
+model_dish_cleaned -> datalog_violations_dish
+model_dish_dirty -> datalog_violations_dish
+datalog_facts_menuitem -> facts_menuitem_cleaned
+datalog_facts_menuitem -> facts_menuitem_dirty
+csv_menuitem_python -> datalog_facts_menuitem
+csv_menuitem_dirty -> datalog_facts_menuitem
+rules_menuitem -> datalog_facts_menuitem
+datalog_model_menuitem -> model_menuitem_cleaned
+datalog_model_menuitem -> model_menuitem_dirty
+facts_menuitem_cleaned -> datalog_model_menuitem
+facts_menuitem_dirty -> datalog_model_menuitem
+datalog_violations_menuitem -> violations_menuitem_cleaned
+datalog_violations_menuitem -> violations_menuitem_dirty
+model_menuitem_cleaned -> datalog_violations_menuitem
+model_menuitem_dirty -> datalog_violations_menuitem
+datalog_facts_menupage -> facts_menupage_cleaned
+datalog_facts_menupage -> facts_menupage_dirty
+csv_menupage_openrefine -> datalog_facts_menupage
+csv_menupage_dirty -> datalog_facts_menupage
+rules_menupage -> datalog_facts_menupage
+datalog_model_menupage -> model_menupage_cleaned
+datalog_model_menupage -> model_menupage_dirty
+facts_menupage_cleaned -> datalog_model_menupage
+facts_menupage_dirty -> datalog_model_menupage
+datalog_violations_menupage -> violations_menupage_cleaned
+datalog_violations_menupage -> violations_menupage_dirty
+model_menupage_cleaned -> datalog_violations_menupage
+model_menupage_dirty -> datalog_violations_menupage
+datalog_facts_menu -> facts_menu_cleaned
+datalog_facts_menu -> facts_menu_dirty
+csv_menu_openrefine -> datalog_facts_menu
+csv_menu_dirty -> datalog_facts_menu
+rules_menu -> datalog_facts_menu
+datalog_model_menu -> model_menu_cleaned
+datalog_model_menu -> model_menu_dirty
+facts_menu_cleaned -> datalog_model_menu
+facts_menu_dirty -> datalog_model_menu
+datalog_violations_menu -> violations_menu_cleaned
+datalog_violations_menu -> violations_menu_dirty
+model_menu_cleaned -> datalog_violations_menu
+model_menu_dirty -> datalog_violations_menu
+datalog_facts_combined -> facts_combined_cleaned
+datalog_facts_combined -> facts_combined_dirty
+csv_dish_openrefine -> datalog_facts_combined
+csv_dish_dirty -> datalog_facts_combined
+csv_menu_openrefine -> datalog_facts_combined
+csv_menu_dirty -> datalog_facts_combined
+csv_menupage_openrefine -> datalog_facts_combined
+csv_menupage_dirty -> datalog_facts_combined
+csv_menuitem_python -> datalog_facts_combined
+csv_menuitem_dirty -> datalog_facts_combined
+rules_combined -> datalog_facts_combined
+datalog_model_combined -> model_combined_cleaned
+datalog_model_combined -> model_combined_dirty
+facts_combined_cleaned -> datalog_model_combined
+facts_combined_dirty -> datalog_model_combined
+datalog_violations_combined -> violations_combined_cleaned
+datalog_violations_combined -> violations_combined_dirty
+model_combined_cleaned -> datalog_violations_combined
+model_combined_dirty -> datalog_violations_combined
+
+/* End of double cluster for drawing box around nodes in workflow */
+}}
+
+/* End of top-level graph */
+}
